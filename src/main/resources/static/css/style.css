@@ -1,0 +1,39 @@
+@charset "UTF-8";
+#wrap { 
+	width: 100%;
+	background: #fccc63;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+header {
+	height: 70px;
+	background: #fbad50;
+	color: #4c68d7;
+}
+.content {
+	height: 500px;
+}
+.login-box {
+	width: 500px;
+	height: 400px;
+}
+.signup-box {
+	width: 500px;
+	height: 600px;
+}
+#loginBtn {
+	background: #4c68d7;
+	color: #fff;
+}
+#signUpBtn {
+	background: #4c68d7;
+	color: #fff;
+}
+footer {
+	background: #fbad50;
+	color: #4c68d7;
+	height: 50px;
+	flex: 1;
+}
