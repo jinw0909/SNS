@@ -11,6 +11,10 @@ header {
 	height: 70px;
 	background: #fbad50;
 	color: #4c68d7;
+	font-family: "Neue Helvetica", serif;
+}
+section {
+	flex: 1;
 }
 .content {
 	height: 500px;
@@ -31,9 +35,14 @@ header {
 	background: #4c68d7;
 	color: #fff;
 }
+.post-box {
+	width: 400px;
+	height: 200px;
+	border: 1px solid #000;
+	margin: auto;
+}
 footer {
 	background: #fbad50;
 	color: #4c68d7;
 	height: 50px;
-	flex: 1;
 }

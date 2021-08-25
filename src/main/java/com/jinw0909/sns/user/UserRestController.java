@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,11 +54,25 @@ public class UserRestController {
 			result.put("result", "success");
 			
 			HttpSession session = request.getSession();
+			session.setAttribute("userId", user.getId());
 			session.setAttribute("userLoginId", user.getLoginId());
 			session.setAttribute("userName", user.getName());
 			
 		} else {
 			result.put("result", "fail");
+		}
+		return result;
+	}
+	
+	@GetMapping("/is_duplicate_id")
+	public Map<String, Boolean> isDuplicateId(@RequestParam("loginId") String loginId) {
+		
+		Map<String, Boolean> result = new HashMap<>();
+		int count = userBO.checkDuplicate(loginId);
+		if (count >= 1) {
+			result.put("is_duplicate", true);
+		} else {
+			result.put("is_duplicate", false);
 		}
 		return result;
 	}

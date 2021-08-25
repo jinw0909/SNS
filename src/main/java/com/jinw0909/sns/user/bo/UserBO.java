@@ -33,4 +33,8 @@ public class UserBO {
 		
 		
 	}
+	
+	public int checkDuplicate(String loginId) {
+		return userDAO.selectCountById(loginId);
+	}
 }

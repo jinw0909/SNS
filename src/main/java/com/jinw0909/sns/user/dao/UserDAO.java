@@ -16,4 +16,6 @@ public interface UserDAO {
 			, @Param("password") String password
 			);
 	
+	public int selectCountById(@Param("loginId") String loginId);
+	
 }

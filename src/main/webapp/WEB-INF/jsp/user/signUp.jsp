@@ -22,7 +22,14 @@
 				<div class="w-100">
 					<h1 class="text-center">회원가입</h1>
 					<form id="signupForm">
-						<input type="text" id="loginIdInput" name="loginId" class="form-control mt-3" placeholder="아이디">
+						<div class="d-flex  mt-3 input-group">
+							<input type="text" id="loginIdInput" class="form-control" placeholder="아이디">
+							<div class="input-group-append">
+								<button type="button" class="btn btn-info btn-sm input-group-text" id="isDuplicateBtn">중복확인</button>
+							</div>
+						</div>
+						<div id="duplicateDiv" class="d-none"><small class="text-danger">중복된 ID 입니다.</small></div>
+						<div id="noneDuplicateDiv" class="d-none"><small class="text-success">사용 가능한 ID 입니다.</small></div>
 						<input type="password" id="passwordInput" name="password" class="form-control mt-3" placeholder="패스워드">
 						<input type="password" id="passwordConfirmInput" class="form-control mt-3" placeholder="패스워드 확인">
 						<small id="errorPassword" class="text-danger d-none">비밀번호가 일치하지 않습니다.</small>
@@ -37,6 +44,10 @@
 	</div>
 	<script>
 		$(document).ready(function() {
+			
+			var isIdCheck = false;
+			var isDuplicateId = true;
+			
 			$('#signupForm').on('submit', function(e) {
 				
 				e.preventDefault();
@@ -69,6 +80,17 @@
 					alert("이메일을 입력하세요");
 					return false;
 				}
+				// 중복체크 했는지?
+				if(isIdCheck == false) {
+					alert("중복체크를 진행하세요");
+					return ;
+				}
+						
+				// 중복이 되었는지 안되었는지?
+				if(isDuplicate == true) {
+					alert("아이디가 중복되었습니다.");
+					return ;
+				}
 				
 				$.ajax({
 					type: "post",
@@ -88,6 +110,43 @@
 					
 				});
 			});
+			
+			$("#isDuplicateBtn").on("click", function() {
+				
+				var loginId = $("#loginIdInput").val();
+				
+				if(loginId == null || loginId == "") {
+					alert("아이디를 입력하세요");
+					return ;
+				}
+				
+				$.ajax({
+					type:"get",
+					url:"/user/is_duplicate_id",
+					data:{"loginId":loginId},
+					success:function(data) {
+						isIdCheck = true;
+						
+						if(data.is_duplicate) {
+							isDuplicate = true;
+							$("#duplicateDiv").removeClass("d-none");
+							$("#noneDuplicateDiv").addClass("d-none");
+						} else {
+							isDuplicate = false;
+							$("#duplicateDiv").addClass("d-none");
+							$("#noneDuplicateDiv").removeClass("d-none");
+						}
+						//isDuplicate = data.is_duplicate;
+						
+					},
+					error:function(e){
+						alert("중복확인 실패");
+					}
+					
+					
+				});
+				
+			})
 		});
 	</script>
 </body>
