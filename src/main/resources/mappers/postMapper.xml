@@ -35,4 +35,25 @@
 		FROM
 			`post`
 	</select>
+	<insert id="insertComment" parameterType="map">
+		INSERT INTO
+			`comment`
+		(
+			`postId`
+			, `userId`
+			, `userName`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		) VALUES (
+			#{postId}
+			, #{userId}
+			, #{userName}
+			, #{content}
+			, now()
+			, now()
+		)
+		
+		
+	</insert>
 </mapper>

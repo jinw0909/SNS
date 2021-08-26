@@ -32,4 +32,8 @@ public class PostBO {
 	public List<Post> getPostList() {
 		return postDAO.selectPostList();
 	} 
+	
+	public int addComment(String content, int postId, int userId, String userName) {
+		return postDAO.insertComment(content, postId, userId, userName);
+	}
 }

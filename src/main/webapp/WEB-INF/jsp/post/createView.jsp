@@ -22,9 +22,9 @@
 			<div class="w-75 my-5">
 				<!-- <h1 class="text-center">메모입력</h1> -->
 				<!-- 제목, 내용, 파일 업로드 -->
-				<div class="post-box">
+				<div class="post-box rounded">
 					<div class="image-box">					
-						<textarea class="form-control mt-3" rows="5" id="contentInput" placeholder="내용을 입력해주세요"></textarea>
+						<textarea class="form-control mt-3 border-0 resize-none" rows="5" id="contentInput" placeholder="내용을 입력해주세요"></textarea>
 						<!-- MIME -->
 						<div class="d-flex justify-content-between">
 							<input type="file" id="fileInput" accept="image/*" multiple>
@@ -52,8 +52,8 @@
 							<div class="comment-heading bg-secondary mt-3">댓글</div>
 						</div>
 						<div class="d-flex justify-content-between mt-3">
-							<input id="commentInput" type="text" class="form-control" placeholder="댓글을 남겨볼까요?">
-							<button type="button" class="btn btn-info" id="commentBtn">게시</button>
+							<input id="commentInput${post.id }" type="text" class="form-control" placeholder="댓글을 남겨볼까요?">
+							<button type="button" class="btn btn-info commentBtn" data-post-id="${post.id }" id="commentBtn">게시</button>
 						</div>
 					</div>
 				</c:forEach>
@@ -67,6 +67,10 @@
 					if (content == null || content == "") {
 						alert("내용을 입력하세요");
 						return;
+					}
+					
+					if ($('#fileInput')[0].files.length === 0) {
+						
 					}
 					var formData = new FormData();
 					formData.append("content", content);
@@ -90,6 +94,24 @@
 						},
 						error: function(error) {
 							alert("에러발생" + error);
+						}
+					});
+				});
+				
+				$(".commentBtn").on("click", function() {
+					var postId = $(this).data("post-id");
+					var content = $('#commentInput' + postId).val().trim();
+					console.log(content);
+					
+					$.ajax({
+						method: "post",
+						url: "/post/comment/create",
+						data: {"content": content, "postId": postId},
+						success: function(data) {
+							alert("댓글을 작성였습니다.");
+						},
+						error: function(e) {
+							alert("댓글 추가 실패", e);
 						}
 					});
 				});
