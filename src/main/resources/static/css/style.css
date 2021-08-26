@@ -1,17 +1,23 @@
 @charset "UTF-8";
+img {
+	max-width: 100%;
+}
 #wrap { 
 	width: 100%;
 	background: #fccc63;
 	padding: 0;
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	min-height: 100vh;
 }
 header {
 	height: 70px;
 	background: #fbad50;
 	color: #4c68d7;
 	font-family: "Neue Helvetica", serif;
+}
+.user-name {
+	color: #000;
 }
 section {
 	flex: 1;
@@ -36,10 +42,18 @@ section {
 	color: #fff;
 }
 .post-box {
-	width: 400px;
-	height: 200px;
-	border: 1px solid #000;
+	max-width: 400px;
 	margin: auto;
+}
+.image-box {
+	border: 1px solid #000;
+}
+.list {
+	max-width: 400px;
+	margin: auto;
+}
+.list-heading {
+	border: 1px solid #000;
 }
 footer {
 	background: #fbad50;

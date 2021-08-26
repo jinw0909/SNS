@@ -1,11 +1,14 @@
 package com.jinw0909.sns.post.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jinw0909.sns.common.FileManagerService;
 import com.jinw0909.sns.post.dao.PostDAO;
+import com.jinw0909.sns.post.model.Post;
 
 @Service
 public class PostBO {
@@ -25,4 +28,8 @@ public class PostBO {
 		
 		return postDAO.insertPost(userId, userName, content, filePath);
 	}
+	
+	public List<Post> getPostList() {
+		return postDAO.selectPostList();
+	} 
 }

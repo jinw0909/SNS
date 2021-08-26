@@ -23,4 +23,16 @@
 		)
 		
 	</insert>
+	<select id="selectPostList" resultType="com.jinw0909.sns.post.model.Post">
+		SELECT
+			`id`
+			,`userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+	</select>
 </mapper>

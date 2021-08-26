@@ -11,6 +11,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 <link rel="stylesheet" href="/static/css/style.css">
 </head>
@@ -22,20 +23,40 @@
 				<!-- <h1 class="text-center">메모입력</h1> -->
 				<!-- 제목, 내용, 파일 업로드 -->
 				<div class="post-box">
-					<!-- <div class="d-flex">
-						<label>제목</label>
-						<input type="text" class="form-control col-11 ml-3" id="titleInput">
-					</div> -->
-					
-					<textarea class="form-control mt-3" rows="5" id="contentInput" placeholder="내용을 입력해주세요"></textarea>
-					<!-- MIME -->
-					<input type="file" id="fileInput" accept="image/*" multiple>
+					<div class="image-box">					
+						<textarea class="form-control mt-3" rows="5" id="contentInput" placeholder="내용을 입력해주세요"></textarea>
+						<!-- MIME -->
+						<div class="d-flex justify-content-between">
+							<input type="file" id="fileInput" accept="image/*" multiple>
+							<button type="btn" id="postBtn" class="btn btn-primary">업로드</button>
+						</div> 
+					</div>
 				</div>
-				
-				<div class="d-flex justify-content-between mt-3">
-					<a href="/post/list_view" class="btn btn-info">목록으로</a>
-					<button type="button" class="btn btn-success" id="saveBtn">저장</button>
-				</div>
+				<c:forEach var="post" items="${postList }" varStatus="status">
+					<div class="list">
+						<div class="list-heading d-flex justify-content-between align-items-center mt-3 bg-secondary">
+							<span id="userId">${post.userName }</span>
+							<i class="bi bi-three-dots"></i>
+						</div>
+						<div class="list-image mt-3">
+							<img src="${post.imagePath }">
+						</div>
+						<div class="list-like">
+							<i class="bi bi-heart"></i>
+							<b>좋아요 11개</b>
+						</div>
+						<div class="list-content">
+							${post.content }
+						</div>
+						<div class="comment">
+							<div class="comment-heading bg-secondary mt-3">댓글</div>
+						</div>
+						<div class="d-flex justify-content-between mt-3">
+							<input id="commentInput" type="text" class="form-control" placeholder="댓글을 남겨볼까요?">
+							<button type="button" class="btn btn-info" id="commentBtn">게시</button>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"></c:import>
