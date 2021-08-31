@@ -1,5 +1,6 @@
 package com.jinw0909.sns.post.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,14 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jinw0909.sns.common.FileManagerService;
+import com.jinw0909.sns.post.comment.bo.CommentBO;
+import com.jinw0909.sns.post.comment.model.Comment;
 import com.jinw0909.sns.post.dao.PostDAO;
 import com.jinw0909.sns.post.model.Post;
+import com.jinw0909.sns.post.model.PostWithComments;
 
 @Service
 public class PostBO {
 	
 	@Autowired
 	private PostDAO postDAO;
+	
+	@Autowired
+	private CommentBO commentBO;
 	
 	public int addPost(int userId, String userName, String content, MultipartFile file) {
 		
@@ -29,11 +36,23 @@ public class PostBO {
 		return postDAO.insertPost(userId, userName, content, filePath);
 	}
 	
-	public List<Post> getPostList() {
-		return postDAO.selectPostList();
+	public List<PostWithComments> getPostList() {
+		
+		List<Post> postList = postDAO.selectPostList();
+		List<PostWithComments> postWithCommentsList = new ArrayList<>();
+		
+		for (Post post: postList) {
+			List<Comment> commentList = commentBO.getCommentListByPostId(post.getId());
+			
+			PostWithComments postWithComments = new PostWithComments();
+			postWithComments.setPost(post);
+			postWithComments.setCommentList(commentList);
+			
+			postWithCommentsList.add(postWithComments);
+		}
+		
+		return postWithCommentsList;
 	} 
 	
-	public int addComment(String content, int postId, int userId, String userName) {
-		return postDAO.insertComment(content, postId, userId, userName);
-	}
+	
 }

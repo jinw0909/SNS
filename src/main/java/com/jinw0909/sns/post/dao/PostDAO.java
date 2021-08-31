@@ -18,10 +18,5 @@ public interface PostDAO {
 	
 	public List<Post> selectPostList();
 	
-	public int insertComment(
-			@Param("content") String comment
-			, @Param("postId") int postId
-			, @Param("userId") int userId
-			, @Param("userName") String userName
-			);
+	
 }

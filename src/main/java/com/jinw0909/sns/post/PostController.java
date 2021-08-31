@@ -11,22 +11,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jinw0909.sns.post.dao.PostDAO;
-import com.jinw0909.sns.post.model.Post;
+import com.jinw0909.sns.post.bo.PostBO;
+import com.jinw0909.sns.post.model.PostWithComments;
 
 @Controller
 @RequestMapping("/post")
 public class PostController {
 	
 	@Autowired
-	private PostDAO postDAO;
+	private PostBO postBO;
 		
 	@GetMapping("/create_view")
 	public String createView(Model model,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		List<Post> postList = postDAO.selectPostList();
+		List<PostWithComments> postList = postBO.getPostList();
 		model.addAttribute("postList", postList);
 		return "post/createView";
 	}

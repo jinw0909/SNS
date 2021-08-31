@@ -20,40 +20,48 @@
 		<c:import url="/WEB-INF/jsp/include/header.jsp"></c:import>
 		<section class="d-flex justify-content-center">
 			<div class="w-75 my-5">
-				<!-- <h1 class="text-center">메모입력</h1> -->
-				<!-- 제목, 내용, 파일 업로드 -->
+			
 				<div class="post-box rounded">
-					<div class="image-box">					
-						<textarea class="form-control mt-3 border-0 resize-none" rows="5" id="contentInput" placeholder="내용을 입력해주세요"></textarea>
-						<!-- MIME -->
-						<div class="d-flex justify-content-between">
-							<input type="file" id="fileInput" accept="image/*" multiple>
-							<button type="btn" id="postBtn" class="btn btn-primary">업로드</button>
-						</div> 
-					</div>
+					<textarea class="form-control mt-3 border-0 resize-none" rows="5" id="contentInput" placeholder="내용을 입력해주세요"></textarea>
+					<!-- MIME -->
+					<div class="d-flex justify-content-between align-items-center p-2">
+						<input type="file" id="fileInput" accept="image/*" style="display: none" multiple>
+						<a href="#" id="imageUploadBtn"><i class="bi bi-image image-upload-icon"></i></a>
+						<button type="btn" id="postBtn" class="btn btn-sm btn-primary">업로드</button>
+					</div> 
 				</div>
+				
 				<c:forEach var="post" items="${postList }" varStatus="status">
 					<div class="list">
 						<div class="list-heading d-flex justify-content-between align-items-center mt-3 bg-secondary">
-							<span id="userId">${post.userName }</span>
+							<span id="userId">${post.post.userName }</span>
 							<i class="bi bi-three-dots"></i>
 						</div>
 						<div class="list-image mt-3">
-							<img src="${post.imagePath }">
+							<img src="${post.post.imagePath }">
 						</div>
 						<div class="list-like">
 							<i class="bi bi-heart"></i>
 							<b>좋아요 11개</b>
 						</div>
 						<div class="list-content">
-							${post.content }
+							${post.post.content }
 						</div>
+						<hr/>
 						<div class="comment">
-							<div class="comment-heading bg-secondary mt-3">댓글</div>
+							<div class="comment-heading mt-3">
+							<c:forEach var="comment" items="${post.commentList }" >
+								<div class="mt-1">
+									<b>${comment.userName }</b> ${comment.content }
+								</div>
+							</c:forEach>
+							</div>
 						</div>
-						<div class="d-flex justify-content-between mt-3">
-							<input id="commentInput${post.id }" type="text" class="form-control" placeholder="댓글을 남겨볼까요?">
-							<button type="button" class="btn btn-info commentBtn" data-post-id="${post.id }" id="commentBtn">게시</button>
+						<div class="input-group mt-2">
+							<input id="commentInput${post.post.id }" type="text" class="form-control" placeholder="댓글을 남겨주세요">
+							<div class="input-group-append">
+								<button type="button" class="btn btn-info commentBtn" data-post-id="${post.post.id }" id="commentBtn">게시</button>
+							</div>
 						</div>
 					</div>
 				</c:forEach>
@@ -98,20 +106,33 @@
 					});
 				});
 				
+				$("#imageUploadBtn").on("click", function() {
+					$("#fileInput").click();
+				});
+				
 				$(".commentBtn").on("click", function() {
 					var postId = $(this).data("post-id");
 					var content = $('#commentInput' + postId).val().trim();
 					console.log(content);
+					
+					if(content == null || content == "") {
+						alert("내용을 입력하세요");
+						return;
+					}
 					
 					$.ajax({
 						method: "post",
 						url: "/post/comment/create",
 						data: {"content": content, "postId": postId},
 						success: function(data) {
-							alert("댓글을 작성였습니다.");
+							if(data.result == "success") {
+								location.reload();
+							} else {
+								alert("댓글 작성 실패");
+							}
 						},
 						error: function(e) {
-							alert("댓글 추가 실패", e);
+							alert("error");
 						}
 					});
 				});
