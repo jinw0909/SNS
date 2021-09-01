@@ -23,6 +23,9 @@ public class PostBO {
 	@Autowired
 	private CommentBO commentBO;
 	
+	@Autowired
+	private LikeBO likeBO;
+	
 	public int addPost(int userId, String userName, String content, MultipartFile file) {
 		
 		//file to url path logic comes here
@@ -36,17 +39,24 @@ public class PostBO {
 		return postDAO.insertPost(userId, userName, content, filePath);
 	}
 	
-	public List<PostWithComments> getPostList() {
+	public List<PostWithComments> getPostList(int userId) {
 		
 		List<Post> postList = postDAO.selectPostList();
 		List<PostWithComments> postWithCommentsList = new ArrayList<>();
+		boolean isLike = false;
+		
 		
 		for (Post post: postList) {
 			List<Comment> commentList = commentBO.getCommentListByPostId(post.getId());
-			
+			if (likeBO.existLike(post.getId(), userId) >= 1) {
+				isLike = true;
+			} else {
+				isLike = false;
+			}
 			PostWithComments postWithComments = new PostWithComments();
 			postWithComments.setPost(post);
 			postWithComments.setCommentList(commentList);
+			postWithComments.setLike(isLike);
 			
 			postWithCommentsList.add(postWithComments);
 		}

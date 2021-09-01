@@ -26,7 +26,9 @@ public class PostController {
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		List<PostWithComments> postList = postBO.getPostList();
+		int userId = (Integer)session.getAttribute("userId");
+		
+		List<PostWithComments> postList = postBO.getPostList(userId);
 		model.addAttribute("postList", postList);
 		return "post/createView";
 	}

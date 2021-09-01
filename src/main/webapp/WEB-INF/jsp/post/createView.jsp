@@ -41,7 +41,18 @@
 							<img src="${post.post.imagePath }">
 						</div>
 						<div class="list-like">
-							<i class="bi bi-heart"></i>
+						<c:choose>
+							<c:when test="${post.like}">
+								<a href="#" class="likeBtn" data-post-id="${post.post.id }">
+									<i class="bi bi-heart-fill"></i>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<a href="#" class="likeBtn" data-post-id="${post.post.id }">
+									<i class="bi bi-heart"></i>
+								</a>
+							</c:otherwise>
+						</c:choose>
 							<b>좋아요 11개</b>
 						</div>
 						<div class="list-content">
@@ -134,6 +145,29 @@
 						error: function(e) {
 							alert("error");
 						}
+					});
+				});
+				
+				$('.likeBtn').on('click', function(e) {
+					e.preventDefault();
+					var postId = $(this).data("post-id");
+					console.log(postId);
+					
+					$.ajax({
+						type: "get",
+						url: "/post/like",
+						data: {"postId": postId},
+						success: function(data) {
+							if(data.result == "success") {
+								alert("좋아요 성공");
+							} else {
+								alert("좋아요 실패");
+							}
+						},
+						error: function(error) {
+							alert("error");
+						}
+						
 					});
 				});
 			});
