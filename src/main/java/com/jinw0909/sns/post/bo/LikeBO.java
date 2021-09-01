@@ -18,4 +18,12 @@ public class LikeBO {
 	public int existLike(int postId, int userId) {
 		return likeDAO.selectCountLike(postId, userId);
 	}
+	
+	public int deleteLike(int postId, int userId) {
+		return likeDAO.deleteLike(postId, userId);
+	}
+	
+	public int countLike(int postId) {
+		return likeDAO.countLike(postId);
+	}
 }

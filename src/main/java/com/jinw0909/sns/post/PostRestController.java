@@ -70,5 +70,25 @@ public class PostRestController {
 		
 	}
 	
+	@PostMapping("/delete_like")
+	public Map<String, String> deleteLike(
+			@RequestParam("postId") int postId
+			, HttpServletRequest request
+			) {
+		HttpSession session = request.getSession();
+		int userId = (Integer)session.getAttribute("userId");
+		int count = likeBO.deleteLike(postId, userId);
+		
+		Map<String, String> result = new HashMap<>();
+		
+		if (count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "failure");
+		}
+		
+		return result;
+	}
+	
 	
 }

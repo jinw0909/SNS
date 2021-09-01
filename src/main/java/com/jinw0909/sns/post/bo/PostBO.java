@@ -53,10 +53,12 @@ public class PostBO {
 			} else {
 				isLike = false;
 			}
+			int likeCount = likeBO.countLike(post.getId());
 			PostWithComments postWithComments = new PostWithComments();
 			postWithComments.setPost(post);
 			postWithComments.setCommentList(commentList);
 			postWithComments.setLike(isLike);
+			postWithComments.setLikeCount(likeCount);
 			
 			postWithCommentsList.add(postWithComments);
 		}

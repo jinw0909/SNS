@@ -43,7 +43,7 @@
 						<div class="list-like">
 						<c:choose>
 							<c:when test="${post.like}">
-								<a href="#" class="likeBtn" data-post-id="${post.post.id }">
+								<a href="#" class="deleteLike" data-post-id="${post.post.id }">
 									<i class="bi bi-heart-fill"></i>
 								</a>
 							</c:when>
@@ -53,7 +53,7 @@
 								</a>
 							</c:otherwise>
 						</c:choose>
-							<b>좋아요 11개</b>
+							<b>${post.likeCount }</b>
 						</div>
 						<div class="list-content">
 							${post.post.content }
@@ -160,8 +160,32 @@
 						success: function(data) {
 							if(data.result == "success") {
 								alert("좋아요 성공");
+								location.reload();
 							} else {
 								alert("좋아요 실패");
+							}
+						},
+						error: function(error) {
+							alert("error");
+						}
+						
+					});
+				});
+				$('.deleteLike').on('click', function(e) {
+					e.preventDefault();
+					var postId = $(this).data("post-id");
+					console.log(postId);
+					
+					$.ajax({
+						type: "post",
+						url: "/post/delete_like",
+						data: {"postId": postId},
+						success: function(data) {
+							if(data.result == "success") {
+								alert("좋아요 삭제 성공");
+								location.reload();
+							} else {
+								alert("좋아요 삭제 실패");
 							}
 						},
 						error: function(error) {
