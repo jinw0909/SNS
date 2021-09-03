@@ -27,7 +27,7 @@
 					<div class="d-flex justify-content-between align-items-center p-2">
 						<input type="file" id="fileInput" accept="image/*" style="display: none" multiple>
 						<a href="#" id="imageUploadBtn"><i class="bi bi-image image-upload-icon"></i></a>
-						<button type="btn" id="postBtn" class="btn btn-sm btn-primary">업로드</button>
+						<button type="btn" id="saveBtn" class="btn btn-sm btn-primary">업로드</button>
 					</div> 
 				</div>
 				
@@ -35,7 +35,7 @@
 					<div class="list">
 						<div class="list-heading d-flex justify-content-between align-items-center mt-3 bg-secondary">
 							<span id="userId">${post.post.userName }</span>
-							<i class="bi bi-three-dots"></i>
+							<a class="moreBtn" data-toggle="modal" data-target="#deleteModal" data-post-id="${post.post.id }"><i class="bi bi-three-dots"></i></a>
 						</div>
 						<div class="list-image mt-3">
 							<img src="${post.post.imagePath }">
@@ -79,6 +79,24 @@
 			</div>
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"></c:import>
+		
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">
+		  Launch demo modal
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      
+		      <div class="modal-body text-center">
+		       	<a href="#" class="deletePostBtn">삭제하기</a> 
+		      </div>
+		     
+		    </div>
+		  </div>
+		</div>
 		<script>
 			$(document).ready(function() {
 				$('#saveBtn').on('click', function() {
@@ -192,6 +210,34 @@
 							alert("error");
 						}
 						
+					});
+				});
+				
+				$('.moreBtn').on('click', function() {
+					//postId를 모달의 삭제 버튼에 주입한다.
+					var postId = $(this).data("post-id");
+					$('.deletePostBtn').attr("data-post-id", postId);
+					
+				});
+				$('.deletePostBtn').on('click', function(e) {
+					e.preventDefault();
+					var postId = $(this).data("post-id");
+					console.log(postId);
+					$.ajax({
+						type: "post",
+						url: "/post/delete",
+						data: {"postId": postId},
+						success: function(data) {
+							if(data.result == "success") {
+								alert("삭제 성공");
+								location.reload();
+							} else {
+								alert("삭제 실패");
+							}
+						},
+						error: function(error) {
+							alert("ajax 에러 삭제 실패");
+						}
 					});
 				});
 			});

@@ -66,5 +66,7 @@ public class PostBO {
 		return postWithCommentsList;
 	} 
 	
-	
+	public int deletePost(int postId, int userId) {
+		return postDAO.deletePost(postId, userId);
+	}
 }
