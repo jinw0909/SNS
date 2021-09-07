@@ -35,7 +35,9 @@
 					<div class="list">
 						<div class="list-heading d-flex justify-content-between align-items-center mt-3 bg-secondary">
 							<span id="userId">${post.post.userName }</span>
-							<a class="moreBtn" data-toggle="modal" data-target="#deleteModal" data-post-id="${post.post.id }"><i class="bi bi-three-dots"></i></a>
+							<c:if test="${post.post.userId eq userId }">
+								<a class="moreBtn" data-toggle="modal" data-target="#deleteModal" data-post-id="${post.post.id }"><i class="bi bi-three-dots"></i></a>
+							</c:if>
 						</div>
 						<div class="list-image mt-3">
 							<img src="${post.post.imagePath }">
@@ -91,7 +93,7 @@
 		    <div class="modal-content">
 		      
 		      <div class="modal-body text-center">
-		       	<a href="#" class="deletePostBtn">삭제하기</a> 
+		       	<a href="#" id="deletePostBtn">삭제하기</a> 
 		      </div>
 		     
 		    </div>
@@ -216,10 +218,10 @@
 				$('.moreBtn').on('click', function() {
 					//postId를 모달의 삭제 버튼에 주입한다.
 					var postId = $(this).data("post-id");
-					$('.deletePostBtn').attr("data-post-id", postId);
+					$('#deletePostBtn').data("post-id", postId);
 					
 				});
-				$('.deletePostBtn').on('click', function(e) {
+				$('#deletePostBtn').on('click', function(e) {
 					e.preventDefault();
 					var postId = $(this).data("post-id");
 					console.log(postId);

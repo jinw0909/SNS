@@ -43,4 +43,19 @@
 			AND `userId` = #{userId}
 	</delete>
 	
+	<select id="selectPost" parameterType="int" resultType="com.jinw0909.sns.post.model.Post">
+		SELECT
+			`id`
+			,`userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE
+			`id` = #{id}
+	</select>
+	
 </mapper>

@@ -67,6 +67,14 @@ public class PostBO {
 	} 
 	
 	public int deletePost(int postId, int userId) {
+		
+		likeBO.deleteLikeByPostId(postId);
+		commentBO.deleteCommentByPostId(postId);
+		
+		Post post = postDAO.selectPost(postId);
+		FileManagerService fileManagerService = new FileManagerService();
+		fileManagerService.removeFile(post.getImagePath());
+		
 		return postDAO.deletePost(postId, userId);
 	}
 }
