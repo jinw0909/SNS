@@ -21,6 +21,18 @@
 
 DEMO
 -----
+* 로그인화면
+
+![login](https://user-images.githubusercontent.com/83801879/132307309-fb5d15a8-3aed-481e-ac28-5d92942135a4.png)
+
+* 회원가입화면
+
+![join](https://user-images.githubusercontent.com/83801879/132307395-95d8b677-ecd8-46b3-8459-8ba2823af116.png)
+
+* 타임라인 View
+
+![timeline](https://user-images.githubusercontent.com/83801879/132307432-72dfc4c2-93c5-42ca-8101-0fa4d8b64dde.png)
+
 사용한 라이브러리 && 라이센스
 -----------------------
 * Tomcat
