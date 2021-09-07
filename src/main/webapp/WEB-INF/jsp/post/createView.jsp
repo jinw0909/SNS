@@ -83,9 +83,9 @@
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"></c:import>
 		
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">
+		<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">
 		  Launch demo modal
-		</button>
+		</button> -->
 		
 		<!-- Modal -->
 		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -109,7 +109,8 @@
 					}
 					
 					if ($('#fileInput')[0].files.length === 0) {
-						
+						alert("이미지를 추가하세요");
+						return;
 					}
 					var formData = new FormData();
 					formData.append("content", content);
