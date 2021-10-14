@@ -1,5 +1,6 @@
 # 인스타그램2 - 모의 SNS 프로젝트
 초소형 소셜네트워킹서버 + 프론트 구현
+기존 캐릭터 활용 
 
 프로젝트 설명
 ---------
@@ -9,9 +10,11 @@
 
 설계
 ---
-* ui
-* url
-* db
+* ui  
+https://ovenapp.io/project/EuLOrgLK8JKKfoZvtM69ljGJVKGU9cAe#TWXYl
+* db/url  
+https://docs.google.com/spreadsheets/d/1OCRbb_feRwivpi1c6moLnMAFqakIG--uHi0hRXBqjLY/edit#gid=0
+
 
 주요기능
 ------
